@@ -1,0 +1,18 @@
+{
+    "name": "playwing/store-commons",
+    "type": "metapackage",
+    "authors": [
+        {
+            "name": "Dmitriy Bichenko",
+            "email": "dmitriy.bichenko@playwing.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Playwing\\Commons\\": ""
+        }
+    },
+    "require": {
+        "php": ">=7.0"
+    }
+}
