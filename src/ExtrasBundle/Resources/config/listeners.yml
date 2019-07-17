@@ -1,0 +1,9 @@
+services:
+  ExtrasBundle\API\Listener\APIJsonEncodeListener:
+    tags:
+      - { name: kernel.event_subscriber }
+
+  ExtrasBundle\SignatureCheck\Listener\RouteListener:
+    arguments: ['@annotations.reader', '@ExtrasBundle\SignatureCheck\SignatureHandler', '@ExtrasBundle\SignatureCheck\ParametersProvider']
+    tags:
+      - { name: kernel.event_listener, event: kernel.controller }

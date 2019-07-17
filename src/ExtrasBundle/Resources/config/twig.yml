@@ -1,0 +1,8 @@
+services:
+  ExtrasBundle\Twig\FileRegistrarExtension:
+    tags:
+      - { name: twig.extension }
+
+  Phive\Twig\Extensions\Deferred\DeferredExtension:
+    tags:
+      - { name: twig.extension }

@@ -10,7 +10,8 @@
     "autoload": {
         "psr-4": {
             "CountryCarrierDetectionBundle\\": "src/CountryCarrierDetectionBundle",
-            "DeviceDetectionBundle\\": "src/DeviceDetectionBundle"
+            "DeviceDetectionBundle\\": "src/DeviceDetectionBundle",
+            "ExtrasBundle\\": "src/ExtrasBundle"
         }
     },
     "require": {
