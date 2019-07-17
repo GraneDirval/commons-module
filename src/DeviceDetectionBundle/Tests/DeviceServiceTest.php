@@ -1,15 +1,18 @@
 <?php
 
-namespace DeviceDetectionBundle\Tests;
+namespace Tests\DeviceDetectionBundle;
 
-use DeviceDetectionBundle\Service\Identifier;
 use DeviceDetectionBundle\Service\Device;
 use DeviceDetectionBundle\Service\DeviceInterface;
-use Symfony\Component\Cache\Adapter\AbstractAdapter;
+use DeviceDetectionBundle\Service\Identifier;
+use DeviceDetectionBundle\Service\PathProvider;
 use Monolog\Logger;
+use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Cache\Adapter\AbstractAdapter;
 
-class DeviceServiceTest extends \PHPUnit_Framework_TestCase
+class DeviceServiceTest extends TestCase
 {
     /**
      * @var Device
@@ -23,13 +26,18 @@ class DeviceServiceTest extends \PHPUnit_Framework_TestCase
     {
         $identifier = $this->createMock(Identifier::class);
         $cache      = $this->createMock(AbstractAdapter::class);
-        $logger     = $this->createMock(Logger::class);
+        $logger     = $this->createMock(LoggerInterface::class);
         $item       = $this->createMock(CacheItemInterface::class);
+
+        $provider = new PathProvider(
+            __DIR__ . '/../../../var/devicedetection/database/db.json',
+            __DIR__ . '/../../../var/devicedetection/optimized'
+        );
 
         $cache->method('getItem')
               ->will($this->returnValue($item));
 
-        $this->_device = new Device($identifier, $cache, $logger);
+        $this->_device = new Device($identifier, $cache, $logger, $provider);
     }
 
     /**

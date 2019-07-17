@@ -91,7 +91,7 @@ abstract class AbstractFunctionalTest extends \Liip\FunctionalTestBundle\Test\We
 
     abstract protected function configureWebClientClientContainer(ContainerInterface $container);
 
-    final protected function tearDown()
+    final protected function tearDown(): void
     {
         /*$this->entityManager->rollback();*/
     }
