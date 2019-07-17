@@ -1,6 +1,6 @@
 {
     "name": "playwing/store-commons",
-    "type": "metapackage",
+    "type": "library",
     "authors": [
         {
             "name": "Dmitriy Bichenko",
