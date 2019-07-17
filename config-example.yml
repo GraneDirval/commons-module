@@ -23,3 +23,7 @@ extras:
   signature_check:
     request_parameter: signature
     secret_key: secretkey
+  cache:
+    redis_host: 127.0.0.1
+    redis_port: 6378
+    use_array_cache: false

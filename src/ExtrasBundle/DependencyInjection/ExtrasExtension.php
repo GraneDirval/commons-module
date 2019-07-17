@@ -9,6 +9,7 @@
 namespace ExtrasBundle\DependencyInjection;
 
 
+use ExtrasBundle\Config\DefinitionReplacer;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -38,6 +39,11 @@ class ExtrasExtension extends ConfigurableExtension
         if (isset($mergedConfig['cache']['use_array_cache']) && $mergedConfig['cache']['use_array_cache']) {
             $loader->load('redis-dummy.yml');
         }
+
+        $redisProviderDefinition = $container->getDefinition('ExtrasBundle\Cache\Redis\RedisConnectionProvider');
+
+        DefinitionReplacer::replacePlaceholder($redisProviderDefinition, $mergedConfig['cache']['redis_host'], '_redis_host_placeholder_');
+        DefinitionReplacer::replacePlaceholder($redisProviderDefinition, $mergedConfig['cache']['redis_port'], '_redis_port_placeholder_');
 
     }
 }
