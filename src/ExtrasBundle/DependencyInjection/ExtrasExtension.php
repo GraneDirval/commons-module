@@ -40,7 +40,7 @@ class ExtrasExtension extends ConfigurableExtension
             $loader->load('redis-dummy.yml');
         }
 
-        $redisProviderDefinition = $container->getDefinition('ExtrasBundle\Cache\Redis\RedisConnectionProvider');
+        $redisProviderDefinition = $container->getDefinition('app.cache.redis_connection_provider');
 
         DefinitionReplacer::replacePlaceholder($redisProviderDefinition, $mergedConfig['cache']['redis_host'], '_redis_host_placeholder_');
         DefinitionReplacer::replacePlaceholder($redisProviderDefinition, $mergedConfig['cache']['redis_port'], '_redis_port_placeholder_');
