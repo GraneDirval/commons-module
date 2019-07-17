@@ -21,12 +21,12 @@
         "doctrine/orm": "^2.5",
         "twig/twig": "^2.7",
         "phive/twig-extensions-deferred": "^2.0",
-        "predis/predis": "^1.1",
-        "doctrine/doctrine-fixtures-bundle": "3.1.0"
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "mockery/mockery": "1.2.0",
         "phpunit/phpunit": "7",
-        "liip/functional-test-bundle": "dev-master#7481d9c"
+        "liip/functional-test-bundle": "dev-master#7481d9c",
+        "doctrine/doctrine-fixtures-bundle": "^3.1.0"
     }
 }
