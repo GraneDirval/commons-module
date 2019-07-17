@@ -9,13 +9,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "Playwing\\Commons\\": "",
-            "CountryCarrierDetectionBundle\\": "CountryCarrierDetectionBundle",
-            "DeviceDetectionBundle\\": "DeviceDetectionBundle"
+            "CountryCarrierDetectionBundle\\": "src/CountryCarrierDetectionBundle",
+            "DeviceDetectionBundle\\": "src/DeviceDetectionBundle"
         }
     },
     "require": {
         "php": ">=7.0",
-        "geoip2/geoip2": "v2.9.0"
+        "geoip2/geoip2": "v2.9.0",
+        "symfony/framework-bundle": "4.*"
     }
 }

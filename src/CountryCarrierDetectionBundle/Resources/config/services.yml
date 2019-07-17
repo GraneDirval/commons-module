@@ -1,0 +1,14 @@
+services:
+  CountryCarrierDetectionBundle\Service\IpService:
+    arguments: [ '@request_stack' ]
+  CountryCarrierDetectionBundle\Service\CountryService:
+    arguments: [ '@CountryCarrierDetectionBundle\Service\IpService', '_country_database_placeholder_', '_cache_service_', '_logger_service_' ]
+  CountryCarrierDetectionBundle\Service\ISPService:
+    arguments: [ '@CountryCarrierDetectionBundle\Service\IpService', '_isp_database_placeholder_', '_cache_service_', '_logger_service_' ]
+  CountryCarrierDetectionBundle\Service\ConnectionTypeService:
+    arguments: [ '@CountryCarrierDetectionBundle\Service\IpService', '_connection_type_database_placeholder_', '_cache_service_', '_logger_service_' ]
+  CountryCarrierDetectionBundle\Service\MaxMindIpInfo:
+    arguments:
+      - '@CountryCarrierDetectionBundle\Service\CountryService'
+      - '@CountryCarrierDetectionBundle\Service\ISPService'
+      - '@CountryCarrierDetectionBundle\Service\ConnectionTypeService'

@@ -1,0 +1,19 @@
+services:
+    device_detection.service.identifier:
+        class: DeviceDetectionBundle\Service\Identifier
+        arguments: ['@request_stack']
+        public: false
+
+    device_detection.service.device:
+        class: DeviceDetectionBundle\Service\Device
+        arguments: ['@device_detection.service.identifier', '_cache_service_', '_logger_service_', '@device_detection.service.path_provider']
+
+    device_detection.service.path_provider:
+        class: DeviceDetectionBundle\Service\PathProvider
+        arguments: ['_database_path_placeholder_','_optimized_database_path_placeholder_']
+
+    device_detection.command.optimize_database:
+        class: DeviceDetectionBundle\Command\OptimizeDatabaseCommand
+        arguments: ['@device_detection.service.path_provider']
+        tags:
+            - { name: console.command }

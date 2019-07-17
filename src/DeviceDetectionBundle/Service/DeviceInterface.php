@@ -41,13 +41,6 @@ interface DeviceInterface
      */
     static function getAvailableOsTypes($flip = false);
 
-    /**
-     * DeviceInterface constructor.
-     * @param Identifier $identifier
-     * @param AbstractAdapter $cache
-     * @param Logger $logger
-     */
-    public function __construct($identifier, $cache, $logger);
 
     /**
      * Sets the identifier which will be used to retrieve the properties.

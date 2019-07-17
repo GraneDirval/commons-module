@@ -2,15 +2,26 @@
 
 namespace DeviceDetectionBundle\Command;
 
+use DeviceDetectionBundle\Exceptions\CommandException;
+use DeviceDetectionBundle\Service\PathProvider;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use DeviceDetectionBundle\Service\Device;
-use DeviceDetectionBundle\Exceptions\CommandException;
-
 class OptimizeDatabaseCommand extends Command
 {
+    /**
+     * @var PathProvider
+     */
+    private $pathProvider;
+
+    public function __construct(PathProvider $pathProvider)
+    {
+        $this->pathProvider = $pathProvider;
+        parent::__construct();
+    }
+
+
     /**
      * The path to the optimizer script.
      */
@@ -22,8 +33,8 @@ class OptimizeDatabaseCommand extends Command
     protected function configure()
     {
         $this->setName('devicedetection:db:optimize')
-             ->setDescription('Optimizes device detection database.')
-             ->setHelp('The optimizer breaks the data file into smaller parts and caches them on the disk. The API
+            ->setDescription('Optimizes device detection database.')
+            ->setHelp('The optimizer breaks the data file into smaller parts and caches them on the disk. The API
             will use the cached data instead and will only lead the data needed for a certain lookup into the memory.');
     }
 
@@ -49,18 +60,17 @@ class OptimizeDatabaseCommand extends Command
      */
     protected function _optimize()
     {
-        if (!file_exists(Device::DATABASE_FILE_PATH)) {
-
+        if (!file_exists($this->pathProvider->getDatabasePath())) {
             throw new CommandException('No database found to be optimized, please run "update" first');
         }
 
-        if (!file_exists(Device::DATABASE_OPTIMIZED_PATH) && !mkdir(Device::DATABASE_OPTIMIZED_PATH, 0777, true)) {
+        if (!file_exists($this->pathProvider->getOptimizedDatabasePath()) && !mkdir($this->pathProvider->getOptimizedDatabasePath(), 0777, true)) {
 
             throw new CommandException('Could not create optimized directory');
         }
 
         $cmd = 'php %1$s -d %2$s -t %3$s';
-        $cmd = sprintf($cmd, static::PHP_OPTIMIZER_PATH, Device::DATABASE_FILE_PATH, Device::DATABASE_OPTIMIZED_PATH);
+        $cmd = sprintf($cmd, static::PHP_OPTIMIZER_PATH, $this->pathProvider->getDatabasePath(), $this->pathProvider->getOptimizedDatabasePath());
 
         $this->_run($cmd, $output, $code);
 
@@ -76,7 +86,7 @@ class OptimizeDatabaseCommand extends Command
     protected function _clear()
     {
         $cmd = 'rm -rf %1$s';
-        $cmd = sprintf($cmd, Device::DATABASE_OPTIMIZED_PATH);
+        $cmd = sprintf($cmd, $this->pathProvider->getDatabasePath());
 
         $this->_run($cmd, $output, $code);
 
@@ -88,7 +98,7 @@ class OptimizeDatabaseCommand extends Command
 
     /**
      * Executes the supplied command.
-     * @param $cmd
+     * @param      $cmd
      * @param null $output
      * @param null $code
      */

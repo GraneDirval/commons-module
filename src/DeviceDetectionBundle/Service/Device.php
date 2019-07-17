@@ -14,19 +14,6 @@ use Exception;
 
 class Device implements DeviceInterface
 {
-    /**
-     * Path to the database file.
-     */
-    const DATABASE_FILE_PATH = __DIR__ . '/../../../var/devicedetection/database/db.json';
-
-    /**
-     * The optimizer breaks the data file into smaller parts and caches them on the disk.
-     * The API will use the cached data instead and will only lead the data needed
-     * for a certain lookup into the memory.
-     *
-     * Set to "false" to disable optimizer or use a path relative to the bundle to enable.
-     */
-    const DATABASE_OPTIMIZED_PATH = __DIR__ . '/../../../var/devicedetection/optimized';
 
     /**
      * After how much time should the cache expire, in seconds.
@@ -36,16 +23,16 @@ class Device implements DeviceInterface
     /**
      * Internal constants used for mapping attributes.
      */
-    const ATTR_DEVICE_ID       = 'id';
-    const ATTR_DEVICE_VENDOR   = 'manufacturer';
-    const ATTR_DEVICE_MODEL    = 'model';
-    const ATTR_DEVICE_NAME     = 'marketingName';
-    const ATTR_DISPLAY_WIDTH   = 'displayWidth';
-    const ATTR_DISPLAY_HEIGHT  = 'displayHeight';
+    const ATTR_DEVICE_ID = 'id';
+    const ATTR_DEVICE_VENDOR = 'manufacturer';
+    const ATTR_DEVICE_MODEL = 'model';
+    const ATTR_DEVICE_NAME = 'marketingName';
+    const ATTR_DISPLAY_WIDTH = 'displayWidth';
+    const ATTR_DISPLAY_HEIGHT = 'displayHeight';
     const ATTR_DISPLAY_DENSITY = 'displayDensity';
-    const ATTR_OS_TYPE         = 'osType';
-    const ATTR_OS_NAME         = 'osName';
-    const ATTR_OS_VERSION      = 'osVersion';
+    const ATTR_OS_TYPE = 'osType';
+    const ATTR_OS_NAME = 'osName';
+    const ATTR_OS_VERSION = 'osVersion';
 
     /**
      * @var string The identifier which will be used to retrieve the device properties.
@@ -66,6 +53,12 @@ class Device implements DeviceInterface
      * @var Mobi_Mtld_DA_Device_DeviceApi
      */
     protected $_api;
+    private $identifier;
+
+    /**
+     * @var PathProvider
+     */
+    private $pathProvider;
 
     /**
      * @inheritdoc
@@ -73,15 +66,15 @@ class Device implements DeviceInterface
     static public function getAvailableOsTypes($flip = false)
     {
         $osTypes = [
-            static::OS_TYPE_SYMBIAN         => static::OS_NAME_SYMBIAN,
-            static::OS_TYPE_ANDROID         => static::OS_NAME_ANDROID,
-            static::OS_TYPE_IOS             => static::OS_NAME_IOS,
-            static::OS_TYPE_RIM             => static::OS_NAME_RIM,
-            static::OS_TYPE_WINDOWS_PHONE   => static::OS_NAME_WINDOWS_PHONE,
-            static::OS_TYPE_BADA            => static::OS_NAME_BADA,
-            static::OS_TYPE_WINDOWS_RT      => static::OS_NAME_WINDOWS_RT,
-            static::OS_TYPE_WINDOWS_MOBILE  => static::OS_NAME_WINDOWS_MOBILE,
-            static::OS_TYPE_WEB_OS          => static::OS_NAME_WEB_OS
+            static::OS_TYPE_SYMBIAN        => static::OS_NAME_SYMBIAN,
+            static::OS_TYPE_ANDROID        => static::OS_NAME_ANDROID,
+            static::OS_TYPE_IOS            => static::OS_NAME_IOS,
+            static::OS_TYPE_RIM            => static::OS_NAME_RIM,
+            static::OS_TYPE_WINDOWS_PHONE  => static::OS_NAME_WINDOWS_PHONE,
+            static::OS_TYPE_BADA           => static::OS_NAME_BADA,
+            static::OS_TYPE_WINDOWS_RT     => static::OS_NAME_WINDOWS_RT,
+            static::OS_TYPE_WINDOWS_MOBILE => static::OS_NAME_WINDOWS_MOBILE,
+            static::OS_TYPE_WEB_OS         => static::OS_NAME_WEB_OS
         ];
 
         return $flip ? array_flip($osTypes) : $osTypes;
@@ -90,13 +83,15 @@ class Device implements DeviceInterface
     /**
      * @inheritdoc
      */
-    public function __construct($identifier, $cache, $logger)
+    public function __construct($identifier, $cache, $logger, PathProvider $pathProvider)
     {
         $this->_identifier = $identifier->get();
         $this->_cache      = $cache;
         $this->_logger     = $logger;
 
-        if (!file_exists(static::DATABASE_FILE_PATH)) {
+        $this->pathProvider = $pathProvider;
+
+        if (!file_exists($this->pathProvider->getDatabasePath())) {
 
             throw new LibraryException('No device detection database found at the specified path');
         }
@@ -105,18 +100,18 @@ class Device implements DeviceInterface
 
             $config = new Mobi_Mtld_DA_Device_Config();
 
-            if (static::DATABASE_OPTIMIZED_PATH && file_exists(static::DATABASE_OPTIMIZED_PATH)) {
+            if ($this->pathProvider->getOptimizedDatabasePath() && file_exists($this->pathProvider->getOptimizedDatabasePath())) {
 
                 $config->setUseTreeOptimizer(true);
 
                 $config->setIgnoreDataFileChanges(true);
 
-                $config->setOptimizerTempDir(static::DATABASE_OPTIMIZED_PATH);
+                $config->setOptimizerTempDir($this->pathProvider->getOptimizedDatabasePath());
             }
 
             $this->_api = new Mobi_Mtld_DA_Device_DeviceApi($config);
 
-            $this->_api->loadDataFromFile(static::DATABASE_FILE_PATH);
+            $this->_api->loadDataFromFile($this->pathProvider->getDatabasePath());
 
         } catch (LibraryException $error) {
 
@@ -124,6 +119,7 @@ class Device implements DeviceInterface
 
             throw new LibraryException($error->getMessage(), $error->getCode());
         }
+
     }
 
     /**
@@ -264,10 +260,10 @@ class Device implements DeviceInterface
             $properties = $this->_api->getProperties($identifier);
 
             // generic device properties
-            $values[static::ATTR_DEVICE_ID    ] = $properties->id;
+            $values[static::ATTR_DEVICE_ID]     = $properties->id;
             $values[static::ATTR_DEVICE_VENDOR] = $properties->manufacturer;
-            $values[static::ATTR_DEVICE_MODEL ] = $properties->model;
-            $values[static::ATTR_DEVICE_NAME  ] = $properties->marketingName;
+            $values[static::ATTR_DEVICE_MODEL]  = $properties->model;
+            $values[static::ATTR_DEVICE_NAME]   = $properties->marketingName;
 
             // display properties
             $values[static::ATTR_DISPLAY_WIDTH]   = $properties->displayWidth;
