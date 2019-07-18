@@ -36,8 +36,8 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('cache')
                     ->children()
                         ->scalarNode('use_array_cache')->defaultFalse()->end()
-                        ->scalarNode('redis_host')->end()
-                        ->scalarNode('redis_port')->end()
+                        ->scalarNode('redis_host')->isRequired()->end()
+                        ->scalarNode('redis_port')->isRequired()->end()
                     ->end()
                 ->end()
             ->end();
