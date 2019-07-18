@@ -1,7 +1,7 @@
 services:
     app.cache.default:
         class: ExtrasBundle\Cache\CacheServiceWrapper
-        arguments: ['@app.cache.default.translation']
+        arguments: ['@app.cache.redis_default']
 
     app.cache.default_factory:
         class: ExtrasBundle\Cache\CacheFactoryWrapper
@@ -21,3 +21,8 @@ services:
     app.predis:
         class: Predis\Client
         factory: 'app.cache.redis_factory:createCounterConnection'
+
+    app.cache.redis_default:
+        class: ExtrasBundle\Cache\Redis\RedisCacheService
+        factory: [ '@app.cache.redis_factory', 'createCacheService']
+        arguments: ['0', 'default']
