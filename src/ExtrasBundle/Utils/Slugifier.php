@@ -11,7 +11,7 @@ namespace ExtrasBundle\Utils;
 
 class Slugifier
 {
-    public static function slugify($text)
+    public static function slugify($text): string
     {
         // replace non letter or digits by -
         $text = preg_replace('~[^\pL\d]+~u', '-', $text);
