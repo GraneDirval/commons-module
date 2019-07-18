@@ -9,9 +9,6 @@ use Symfony\Component\Cache\Exception\InvalidArgumentException;
 
 class RedisCacheServiceFactory implements ICacheServiceFactory
 {
-    const PLACEHOLDER_DATABASE = 1;
-    const USER_SUBSCRIPTION_DATABASE = 1;
-    const COUNTERS_DATABASE = 2;
 
     /**
      * @var RedisConnectionProvider
@@ -25,10 +22,8 @@ class RedisCacheServiceFactory implements ICacheServiceFactory
     /**
      * RedisCacheServiceFactory constructor.
      *
-     * @param string $host
-     * @param string $port
-     *
-     * @throws \InvalidArgumentException
+     * @param RedisConnectionProvider $connectionProvider
+     * @param string                  $namespace
      */
     public function __construct(RedisConnectionProvider $connectionProvider, string $namespace)
     {

@@ -3,8 +3,5 @@ services:
         class: ExtrasBundle\Cache\CacheFactoryWrapper
         arguments: ['@app.cache.array_factory']
 
-    app.cache.array_factory:
-        class: ExtrasBundle\Cache\ArrayCache\ArrayCacheFactory
-
     session.handler:
         class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler

@@ -22,3 +22,13 @@ services:
         class: ExtrasBundle\Cache\Redis\RedisCacheService
         factory: [ '@app.cache.redis_factory', 'createCacheService']
         arguments: ['0', 'default']
+
+
+    app.cache.array_default:
+        class: ExtrasBundle\Cache\ArrayCache\ArrayCacheService
+        factory: [ '@app.cache.array_factory', 'createCacheService']
+        arguments: ['0', 'default']
+
+
+    app.cache.array_factory:
+        class: ExtrasBundle\Cache\ArrayCache\ArrayCacheFactory
