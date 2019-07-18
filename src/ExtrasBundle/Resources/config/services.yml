@@ -24,3 +24,6 @@ services:
         tags:
             - { name: console.command }
 
+    ExtrasBundle\Image\SimpleImageService: ~
+
+
