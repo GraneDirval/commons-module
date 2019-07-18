@@ -18,10 +18,6 @@ services:
             - "_redis_port_placeholder_"
             - "v%app_version_hash%"
 
-    app.predis:
-        class: Predis\Client
-        factory: 'app.cache.redis_factory:createCounterConnection'
-
     app.cache.redis_default:
         class: ExtrasBundle\Cache\Redis\RedisCacheService
         factory: [ '@app.cache.redis_factory', 'createCacheService']
