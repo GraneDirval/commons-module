@@ -8,7 +8,10 @@
 
 namespace ExtrasBundle\Cache\Redis;
 
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
+use Symfony\Component\Cache\Adapter\TraceableAdapter;
+use Symfony\Component\Cache\DataCollector\CacheDataCollector;
 
 class RedisConnectionProvider
 {
@@ -19,15 +22,14 @@ class RedisConnectionProvider
     /** @var string */
     private $port;
 
-    private $defaultOptions = [
-        'timeout'      => 1,
-        'read_timeout' => 1,
-        'persistent'   => 1,
-    ];
     /**
      * @var string
      */
     private $namespace;
+    /**
+     * @var CacheDataCollector
+     */
+    private $collector;
 
     /**
      * RedisConnectionProvider constructor.
@@ -35,11 +37,12 @@ class RedisConnectionProvider
      * @param string $port
      * @param string $namespace
      */
-    public function __construct(string $host, string $port, string $namespace)
+    public function __construct(string $host, string $port, string $namespace, CacheDataCollector $collector = null)
     {
         $this->host      = $host;
         $this->port      = $port;
         $this->namespace = $namespace;
+        $this->collector = $collector;
     }
 
     /**
@@ -56,10 +59,16 @@ class RedisConnectionProvider
         );
     }
 
-    public function createWrapped($database, $options = [])
+    public function createAdapter($database, $namespace = '', $options = []): AdapterInterface
     {
         $connection = $this->create($database, $options);
 
-        return new RedisAdapter($connection, $this->namespace);
+        $adapter = new TraceableAdapter(
+            new RedisAdapter($connection, $namespace)
+        );
+
+        $this->collector->addInstance(sprintf('app.extras.%s', $namespace), $adapter);
+
+        return $adapter;
     }
 }

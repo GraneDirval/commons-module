@@ -11,15 +11,16 @@ namespace ExtrasBundle\Cache\ArrayCache;
 
 use ExtrasBundle\Cache\ICacheService;
 use Psr\Cache\CacheItemInterface;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 class ArrayCacheService implements ICacheService
 {
     private $adapter;
 
-    public function __construct()
+    public function __construct(AdapterInterface $adapter)
     {
-        $this->adapter = new ArrayAdapter();
+        $this->adapter = $adapter;
     }
 
     /**

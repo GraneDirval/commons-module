@@ -12,9 +12,24 @@ namespace ExtrasBundle\Cache\ArrayCache;
 use ExtrasBundle\Cache\ICacheService;
 use ExtrasBundle\Cache\ICacheServiceFactory;
 use InvalidArgumentException;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\Adapter\TraceableAdapter;
+use Symfony\Component\Cache\DataCollector\CacheDataCollector;
 
 class ArrayCacheFactory implements ICacheServiceFactory
 {
+    /**
+     * @var CacheDataCollector
+     */
+    private $cacheDataCollector;
+
+    /**
+     * ArrayCacheFactory constructor.
+     */
+    public function __construct(CacheDataCollector $cacheDataCollector = null)
+    {
+        $this->cacheDataCollector = $cacheDataCollector;
+    }
 
 
     /**
@@ -25,6 +40,14 @@ class ArrayCacheFactory implements ICacheServiceFactory
      */
     public function createCacheService(int $database, string $namespace, array $options = []): ICacheService
     {
-        return new ArrayCacheService();
+        $adapter = new TraceableAdapter(
+            new ArrayAdapter()
+        );
+
+        if($this->cacheDataCollector){
+            $this->cacheDataCollector->addInstance(sprintf('app.extras.%s', $namespace), $adapter);
+        }
+
+        return new ArrayCacheService($adapter);
     }
 }

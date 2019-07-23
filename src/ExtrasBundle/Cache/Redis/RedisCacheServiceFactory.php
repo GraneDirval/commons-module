@@ -40,9 +40,9 @@ class RedisCacheServiceFactory implements ICacheServiceFactory
      */
     public function createCacheService(int $database, string $namespace, array $options = []): ICacheService
     {
-        $connection = $this->connectionProvider->create($database, $options);
+        $adapter = $this->connectionProvider->createAdapter($database, $namespace, $options);
 
-        return new RedisCacheService(new RedisAdapter($connection, $namespace));
+        return new RedisCacheService($adapter);
 
     }
 }

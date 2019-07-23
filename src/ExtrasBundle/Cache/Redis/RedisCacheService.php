@@ -4,6 +4,7 @@ namespace ExtrasBundle\Cache\Redis;
 
 use ExtrasBundle\Cache\ICacheService;
 use Psr\Cache\CacheItemInterface;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 
 class RedisCacheService implements ICacheService
@@ -13,9 +14,9 @@ class RedisCacheService implements ICacheService
 
     /**
      * RedisCacheService constructor.
-     * @param RedisAdapter $adapter
+     * @param AdapterInterface $adapter
      */
-    public function __construct(RedisAdapter $adapter)
+    public function __construct(AdapterInterface $adapter)
     {
         $this->adapter = $adapter;
     }
