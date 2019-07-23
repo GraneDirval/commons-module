@@ -37,13 +37,21 @@ class RedisConnectionProvider
      * @param string $port
      * @param string $namespace
      */
-    public function __construct(string $host, string $port, string $namespace, CacheDataCollector $collector = null)
+    public function __construct(string $host, string $port, string $namespace)
     {
         $this->host      = $host;
         $this->port      = $port;
         $this->namespace = $namespace;
+    }
+
+    /**
+     * @param CacheDataCollector $collector
+     */
+    public function setCollector(CacheDataCollector $collector): void
+    {
         $this->collector = $collector;
     }
+
 
     /**
      * @param       $database
@@ -67,7 +75,9 @@ class RedisConnectionProvider
             new RedisAdapter($connection, $namespace)
         );
 
-        $this->collector->addInstance(sprintf('app.extras.%s', $namespace), $adapter);
+        if ($this->collector) {
+            $this->collector->addInstance(sprintf('app.extras.%s', $namespace), $adapter);
+        }
 
         return $adapter;
     }

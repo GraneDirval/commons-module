@@ -24,9 +24,9 @@ class ArrayCacheFactory implements ICacheServiceFactory
     private $cacheDataCollector;
 
     /**
-     * ArrayCacheFactory constructor.
+     * @param CacheDataCollector $cacheDataCollector
      */
-    public function __construct(CacheDataCollector $cacheDataCollector = null)
+    public function setCacheDataCollector(CacheDataCollector $cacheDataCollector): void
     {
         $this->cacheDataCollector = $cacheDataCollector;
     }
@@ -44,7 +44,7 @@ class ArrayCacheFactory implements ICacheServiceFactory
             new ArrayAdapter()
         );
 
-        if($this->cacheDataCollector){
+        if ($this->cacheDataCollector) {
             $this->cacheDataCollector->addInstance(sprintf('app.extras.%s', $namespace), $adapter);
         }
 

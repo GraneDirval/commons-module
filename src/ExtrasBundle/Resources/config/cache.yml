@@ -17,7 +17,6 @@ services:
             - "_redis_host_placeholder_"
             - "_redis_port_placeholder_"
             - "v%app_version_hash%"
-            - "@data_collector.cache"
 
     app.cache.redis_default:
         class: ExtrasBundle\Cache\Redis\RedisCacheService
@@ -33,5 +32,3 @@ services:
 
     app.cache.array_factory:
         class: ExtrasBundle\Cache\ArrayCache\ArrayCacheFactory
-        arguments:
-          - '@data_collector.cache'

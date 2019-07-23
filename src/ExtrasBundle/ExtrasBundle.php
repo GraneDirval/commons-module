@@ -9,6 +9,7 @@
 namespace ExtrasBundle;
 
 
+use ExtrasBundle\DependencyInjection\Compiler\TraceableCachePass;
 use ExtrasBundle\Testing\CompilerPass\PublicForTestsCompilerPass;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -22,6 +23,7 @@ class ExtrasBundle extends Bundle
 
         $container->addCompilerPass(new PublicForTestsCompilerPass(),PassConfig::TYPE_AFTER_REMOVING);
 
+        $container->addCompilerPass(new TraceableCachePass());
     }
 
 
