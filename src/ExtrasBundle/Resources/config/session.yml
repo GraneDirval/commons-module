@@ -1,0 +1,11 @@
+services:
+  app.session.redis_connection:
+    class: Predis\Client
+    factory: ['@app.cache.redis_connection_provider','create']
+    arguments:
+      - 3
+
+  app.session.redis_handler:
+    class: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
+    arguments:
+      - '@app.session.redis_connection'
