@@ -75,7 +75,7 @@ class RedisConnectionProvider
             new RedisAdapter($connection, $namespace)
         );
 
-        if ($this->collector) {
+        if ($this->collector && $namespace) {
             $this->collector->addInstance(sprintf('app.extras.%s', $namespace), $adapter);
         }
 

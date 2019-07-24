@@ -44,7 +44,7 @@ class ArrayCacheFactory implements ICacheServiceFactory
             new ArrayAdapter()
         );
 
-        if ($this->cacheDataCollector) {
+        if ($this->cacheDataCollector && $namespace) {
             $this->cacheDataCollector->addInstance(sprintf('app.extras.%s', $namespace), $adapter);
         }
 
