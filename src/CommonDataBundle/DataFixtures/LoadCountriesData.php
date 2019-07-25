@@ -12,7 +12,7 @@ namespace CommonDataBundle\DataFixtures;
 use CommonDataBundle\Entity\Country;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Playwing\DiffToolBundle\Utils\FixtureDataLoader;
+use ExtrasBundle\Utils\FixtureDataLoader;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
