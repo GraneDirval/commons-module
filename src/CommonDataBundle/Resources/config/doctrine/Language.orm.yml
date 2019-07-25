@@ -1,0 +1,20 @@
+CommonDataBundle\Entity\Language:
+    type: entity
+    table: languages
+    repositoryClass: CommonDataBundle\Repository\LanguageRepository
+    id:
+        uuid:
+            type: guid
+
+    lifecycleCallbacks: {  }
+    fields:
+        name:
+            type: string
+            length: '255'
+            nullable: true
+            options:
+                default: ''
+        code:
+            type: string
+            nullable: false
+            length: '2'

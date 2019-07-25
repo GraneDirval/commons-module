@@ -1,0 +1,12 @@
+services:
+
+  CommonDataBundle\Repository\CountryRepository:
+    factory: ['@doctrine.orm.default_entity_manager', getRepository]
+    arguments:
+      - CommonDataBundle\Entity\Country
+
+
+  CommonDataBundle\Repository\LanguageRepository:
+    factory: ['@doctrine.orm.default_entity_manager', getRepository]
+    arguments:
+      - CommonDataBundle\Entity\Language

@@ -1,0 +1,8 @@
+services:
+
+  _defaults:
+    tags: ['doctrine.fixture.orm']
+
+  CommonDataBundle\DataFixtures\LoadCountriesData: ~
+
+  CommonDataBundle\DataFixtures\LoadLanguagesData: ~
