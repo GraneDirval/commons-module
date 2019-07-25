@@ -2,8 +2,9 @@
 
 namespace CommonDataBundle\Repository;
 
-use IdentificationBundle\Entity\LanguageInterface;
-use IdentificationBundle\Repository\LanguageRepositoryInterface;
+
+use CommonDataBundle\Entity\Interfaces\LanguageInterface;
+use CommonDataBundle\Repository\Interfaces\LanguageRepositoryInterface;
 
 /**
  * Class LanguageRepository
