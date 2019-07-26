@@ -31,6 +31,8 @@ class RedisConnectionProvider
      */
     private $collector;
 
+    private $pool = [];
+
     /**
      * RedisConnectionProvider constructor.
      * @param string $host
@@ -61,10 +63,22 @@ class RedisConnectionProvider
      */
     public function create($database, $options = [])
     {
-        return RedisAdapter::createConnection(
-            sprintf('redis://%s:%s/' . $database, $this->host, $this->port),
+        $dsn = sprintf('redis://%s:%s/%s', $this->host, $this->port, (int)$database);
+        $key = md5($dsn);
+
+        if (isset($this->pool[$key])) {
+            return $this->pool[$key];
+        }
+
+        $options    = array_merge(['persistent_id' => $key], $options);
+        $connection = RedisAdapter::createConnection(
+            $dsn,
             $options
         );
+
+        $this->pool[$key] = $connection;
+
+        return $connection;
     }
 
     public function createAdapter($database, $namespace = '', $options = []): AdapterInterface
