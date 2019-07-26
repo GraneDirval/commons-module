@@ -24,6 +24,10 @@ services:
         tags:
             - { name: console.command }
 
+    ExtrasBundle\Command\GenerateAppVersionHashCommand:
+        tags:
+            - { name: console.command }
+
     ExtrasBundle\Image\SimpleImageService: ~
 
 
