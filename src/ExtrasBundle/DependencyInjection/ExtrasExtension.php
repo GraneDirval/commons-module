@@ -47,8 +47,7 @@ class ExtrasExtension extends ConfigurableExtension
         DefinitionReplacer::replacePlaceholder($redisProviderDefinition, $mergedConfig['cache']['redis_port'], '_redis_port_placeholder_');
 
         $definition = $container->getDefinition('ExtrasBundle\Command\GenerateAppVersionHashCommand');
-
-        $definition->addMethodCall('setDestination',['']);
+        $definition->addMethodCall('setDestination', [$mergedConfig['app_hash_file_path']]);
 
 
     }

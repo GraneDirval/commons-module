@@ -40,7 +40,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('redis_port')->isRequired()->end()
                     ->end()
                 ->end()
-                ->scalarNode('app_version_file_path')->defaultValue('%kernel.root_dir/../var/app_version')->end()
+                ->scalarNode('app_hash_file_path')->defaultValue('%kernel.root_dir/../var/')->end()
             ->end();
 
         return $treeBuilder;
