@@ -4,7 +4,7 @@ namespace ExtrasBundle\Testing\Core;
 
 
 use Doctrine\Common\DataFixtures\Executor\AbstractExecutor;
-use GuzzleHttp\Client;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 abstract class AbstractFunctionalTest extends \Liip\FunctionalTestBundle\Test\WebTestCase
 {
+
+    use FixturesTrait;
+
     use MockeryPHPUnitIntegration;
     /**
      * @var \Doctrine\ORM\EntityManager
