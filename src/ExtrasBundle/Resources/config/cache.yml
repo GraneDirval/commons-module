@@ -16,7 +16,7 @@ services:
         arguments:
             - "_redis_host_placeholder_"
             - "_redis_port_placeholder_"
-            - "v%app_version_hash%"
+            - "_redis_prefix_placeholder_"
 
     app.cache.redis_default:
         class: ExtrasBundle\Cache\Redis\RedisCacheService

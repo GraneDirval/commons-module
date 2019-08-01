@@ -38,6 +38,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('use_array_cache')->defaultFalse()->end()
                         ->scalarNode('redis_host')->isRequired()->end()
                         ->scalarNode('redis_port')->isRequired()->end()
+                        ->scalarNode('redis_prefix')->isRequired()->defaultValue('vdefault')->end()
                     ->end()
                 ->end()
                 ->scalarNode('app_hash_file_path')->defaultValue('%kernel.root_dir%/../var/')->end()
