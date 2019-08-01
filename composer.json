@@ -28,7 +28,7 @@
     "require-dev": {
         "mockery/mockery": "1.2.0",
         "phpunit/phpunit": "7",
-        "liip/functional-test-bundle": "dev-master#7481d9c",
+        "liip/functional-test-bundle": "^3.0",
         "doctrine/doctrine-fixtures-bundle": "^3.1.0"
     }
 }
