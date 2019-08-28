@@ -8,6 +8,6 @@ use CommonDataBundle\Repository\Interfaces\CountryRepositoryInterface;
 /**
  * Class CountryRepository
  */
-class CountryRepository extends EntityRepository implements CountryRepositoryInterface
+class CountryRepository extends \Doctrine\ORM\EntityRepository implements CountryRepositoryInterface
 {
 }
