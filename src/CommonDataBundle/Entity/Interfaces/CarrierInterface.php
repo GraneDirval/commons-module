@@ -78,13 +78,6 @@ interface CarrierInterface
      */
     public function getIsCampaignsOnPause(): bool;
 
-    /**
-     * Get resubAllowed
-     *
-     * @return boolean
-     */
-    public function getResubAllowed(): bool;
-
     public function getSubscribeAttempts();
 
     public function isConfirmationClick(): bool;
