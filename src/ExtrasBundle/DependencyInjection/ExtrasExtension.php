@@ -30,7 +30,13 @@ class ExtrasExtension extends ConfigurableExtension
         $loader->load('cache.yml');
         $loader->load('twig.yml');
         $loader->load('session.yml');
-        $loader->load('testing.yml');
+
+        $env = $container->getParameter('kernel.environment');
+
+        if ($env == 'test') {
+            $loader->load('testing.yml');
+        }
+
 
         $definition = $container->getDefinition('ExtrasBundle\SignatureCheck\ParametersProvider');
 
