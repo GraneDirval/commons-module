@@ -41,7 +41,7 @@ class ArrayCacheFactory implements ICacheServiceFactory
     public function createCacheService(int $database, string $namespace, array $options = []): ICacheService
     {
         $adapter = new TraceableAdapter(
-            new ArrayAdapter()
+            new ArrayAdapter(0, false)
         );
 
         if ($this->cacheDataCollector && $namespace) {
