@@ -10,8 +10,8 @@ namespace ExtrasBundle\Testing\Liip;
 
 
 use Doctrine\Common\DataFixtures\Executor\AbstractExecutor;
-use Liip\FunctionalTestBundle\Services\DatabaseBackup\DatabaseBackupInterface;
-use Liip\FunctionalTestBundle\Services\DatabaseBackup\SqliteDatabaseBackup;
+use Liip\TestFixturesBundle\Services\DatabaseBackup\DatabaseBackupInterface;
+use Liip\TestFixturesBundle\Services\DatabaseBackup\SqliteDatabaseBackup;
 
 class SqliteDatabaseBackupWrapper implements DatabaseBackupInterface
 {
@@ -19,21 +19,15 @@ class SqliteDatabaseBackupWrapper implements DatabaseBackupInterface
      * @var SqliteDatabaseBackup
      */
     private $sqliteDatabaseBackup;
-    /**
-     * @var string
-     */
-    private $kernelCacheDir;
 
 
     /**
      * SqliteDatabaseBackupWrapper constructor.
      * @param SqliteDatabaseBackup $sqliteDatabaseBackup
-     * @param string               $kernelCacheDir
      */
-    public function __construct(SqliteDatabaseBackup $sqliteDatabaseBackup, string $kernelCacheDir)
+    public function __construct(SqliteDatabaseBackup $sqliteDatabaseBackup)
     {
         $this->sqliteDatabaseBackup = $sqliteDatabaseBackup;
-        $this->kernelCacheDir       = $kernelCacheDir;
     }
 
     public function init(array $metadatas, array $classNames, bool $append = false): void

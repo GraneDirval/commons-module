@@ -30,6 +30,7 @@ class ExtrasExtension extends ConfigurableExtension
         $loader->load('cache.yml');
         $loader->load('twig.yml');
         $loader->load('session.yml');
+        $loader->load('testing.yml');
 
         $definition = $container->getDefinition('ExtrasBundle\SignatureCheck\ParametersProvider');
 

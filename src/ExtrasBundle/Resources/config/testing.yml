@@ -1,0 +1,3 @@
+services:
+  ExtrasBundle\Testing\Liip\SqliteDatabaseBackupWrapper:
+    arguments: ['@liip_test_fixtures.services_database_backup.sqlite']
