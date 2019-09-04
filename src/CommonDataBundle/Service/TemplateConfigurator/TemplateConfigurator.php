@@ -78,7 +78,7 @@ class TemplateConfigurator
      *
      * @return string
      */
-    public function getTemplate(string $templatePath, string $template, int $billingCarrierId = 0)
+    public function getTemplate(string $template, int $billingCarrierId = 0, string $templatePath = 'Common')
     {
         $implTemplate = $this
             ->getTemplateHandler($billingCarrierId)
@@ -88,6 +88,6 @@ class TemplateConfigurator
             return $implTemplate;
         }
 
-        return "$this->rootTwigPathName/Common/{$template}.html.twig";
+        return "$this->rootTwigPathName/$templatePath/{$template}.html.twig";
     }
 }
