@@ -24,26 +24,17 @@ class TemplateConfigurator
      * @var Environment
      */
     private $templating;
-    /**
-     * @var string
-     */
-    private $rootTwigPathName;
 
     /**
      * TemplateConfigurator constructor.
      *
      * @param Environment              $templating
      * @param TemplateHandlerInterface $commonHandler
-     * @param string                   $rootTwigPathName
      */
-    public function __construct(
-        Environment $templating,
-        TemplateHandlerInterface $commonHandler,
-        string $rootTwigPathName
-    ) {
+    public function __construct(Environment $templating, TemplateHandlerInterface $commonHandler)
+    {
         $this->templating = $templating;
         $this->commonHandler = $commonHandler;
-        $this->rootTwigPathName = "@$rootTwigPathName";
     }
 
     /**
@@ -78,16 +69,21 @@ class TemplateConfigurator
      *
      * @return string
      */
-    public function getTemplate(string $template, int $billingCarrierId = 0, string $templatePath = 'Common')
+    public function getTemplate(string $template, int $billingCarrierId = 0, string $templatePath = '@App/Common')
     {
+        $pathParts = explode("/", $templatePath);
+
+        $rootTwigAlias = array_shift($pathParts);
+        $relativePath = implode("/", $pathParts);
+
         $implTemplate = $this
             ->getTemplateHandler($billingCarrierId)
-            ->getFullTemplatePath($this->rootTwigPathName, $templatePath, $template);
+            ->getFullTemplatePath($rootTwigAlias, $relativePath, $template);
 
         if ($this->templating->getLoader()->exists($implTemplate)) {
             return $implTemplate;
         }
 
-        return "$this->rootTwigPathName/$templatePath/{$template}.html.twig";
+        return "$templatePath/{$template}.html.twig";
     }
 }

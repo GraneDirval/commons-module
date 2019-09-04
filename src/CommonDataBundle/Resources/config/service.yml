@@ -3,4 +3,3 @@ services:
         arguments:
             - '@twig'
             - '@CommonDataBundle\Service\TemplateConfigurator\Handler\DefaultTemplateHandler'
-            - 'App'
