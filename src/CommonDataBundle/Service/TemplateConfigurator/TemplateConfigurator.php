@@ -69,12 +69,12 @@ class TemplateConfigurator
      *
      * @return string
      */
-    public function getTemplate(string $template, int $billingCarrierId = 0, string $templatePath = '@App\Common')
+    public function getTemplate(string $template, int $billingCarrierId = 0, string $templatePath = '@App/Common')
     {
-        $pathParts = explode("\\", $templatePath);
+        $pathParts = explode("/", $templatePath);
 
         $rootTwigAlias = array_shift($pathParts);
-        $relativePath = implode("\\", $pathParts);
+        $relativePath = implode("/", $pathParts);
 
         $implTemplate = $this
             ->getTemplateHandler($billingCarrierId)
