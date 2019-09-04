@@ -1,0 +1,6 @@
+services:
+    CommonDataBundle\Service\TemplateConfigurator\TemplateConfigurator:
+        arguments:
+            - '@twig'
+            - '@CommonDataBundle\Service\TemplateConfigurator\Handler\DefaultTemplateHandler'
+            - 'App'

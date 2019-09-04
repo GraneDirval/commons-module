@@ -1,0 +1,2 @@
+services:
+    CommonDataBundle\Service\TemplateConfigurator\Handler\DefaultTemplateHandler: ~

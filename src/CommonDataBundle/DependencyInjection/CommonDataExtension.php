@@ -28,6 +28,7 @@ class CommonDataExtension extends ConfigurableExtension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('fixtures.yml');
         $loader->load('repositories.yml');
-
+        $loader->load('service.yml');
+        $loader->load('handlers.yml');
     }
 }
