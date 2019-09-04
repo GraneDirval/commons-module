@@ -18,13 +18,14 @@ class DefaultTemplateHandler implements TemplateHandlerInterface
     }
 
     /**
+     * @param string $rootTwigPathAlias
      * @param string $templatePath
      * @param string $templateName
      *
      * @return string
      */
-    public function getFullTemplatePath(string $templatePath, string $templateName): string
+    public function getFullTemplatePath(string $rootTwigPathAlias, string $templatePath, string $templateName): string
     {
-        return "$templatePath/$templateName.html.twig";
+        return "$rootTwigPathAlias/$templatePath/$templateName.html.twig";
     }
 }

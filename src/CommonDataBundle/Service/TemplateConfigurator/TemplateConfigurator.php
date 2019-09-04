@@ -71,7 +71,14 @@ class TemplateConfigurator
      */
     public function getTemplate(string $template, int $billingCarrierId = 0, string $templatePath = '@App\Common')
     {
-        $implTemplate = $this->getTemplateHandler($billingCarrierId)->getFullTemplatePath($templatePath, $template);
+        $pathParts = explode("\\", $templatePath);
+
+        $rootTwigAlias = array_shift($pathParts);
+        $relativePath = implode("\\", $pathParts);
+
+        $implTemplate = $this
+            ->getTemplateHandler($billingCarrierId)
+            ->getFullTemplatePath($rootTwigAlias, $relativePath, $template);
 
         if ($this->templating->getLoader()->exists($implTemplate)) {
             return $implTemplate;
