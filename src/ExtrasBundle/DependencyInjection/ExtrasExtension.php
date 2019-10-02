@@ -12,10 +12,11 @@ namespace ExtrasBundle\DependencyInjection;
 use ExtrasBundle\Config\DefinitionReplacer;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
-class ExtrasExtension extends ConfigurableExtension
+class ExtrasExtension extends ConfigurableExtension implements PrependExtensionInterface
 {
 
     /**
@@ -57,6 +58,25 @@ class ExtrasExtension extends ConfigurableExtension
         $definition = $container->getDefinition('ExtrasBundle\Command\GenerateAppVersionHashCommand');
         $definition->addMethodCall('setDestination', [$mergedConfig['app_hash_file_path']]);
 
+
+    }
+
+    /**
+     * Allow an extension to prepend the extension configurations.
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+
+        $webProfilerOverride  = realpath(__DIR__ . '/../Resources/WebProfilerBundle/views');
+        $guzzleBundleOverride = realpath(__DIR__ . '/../Resources/EmoeGuzzleBundle/views');
+
+
+        $container->loadFromExtension('twig', array(
+            'paths' => array(
+                $webProfilerOverride  => 'WebProfiler',
+                $guzzleBundleOverride => 'EmoeGuzzle',
+            ),
+        ));
 
     }
 }
