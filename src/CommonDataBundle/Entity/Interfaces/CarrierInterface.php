@@ -97,6 +97,8 @@ interface CarrierInterface
 
     public function getSubscribeAttempts();
 
-    public function isConfirmationClick(): bool;
-
+    /**
+     * @return bool
+     */
+    public function isOneClickFlow(): bool;
 }
