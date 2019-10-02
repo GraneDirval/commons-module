@@ -74,6 +74,23 @@ interface CarrierInterface
     public function setFlushDate(\DateTime $flushDate): self;
 
     /**
+     * Set defaultLanguage
+     *
+     * @param LanguageInterface $defaultLanguage
+     *
+     * @return CarrierInterface
+     */
+    public function setDefaultLanguage(LanguageInterface $defaultLanguage = null): self;
+
+    /**
+     * Get defaultLanguage
+     *
+     * @return LanguageInterface
+     */
+    public function getDefaultLanguage(): ?LanguageInterface;
+
+
+    /**
      * @return bool
      */
     public function getIsCampaignsOnPause(): bool;
