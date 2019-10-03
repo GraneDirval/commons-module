@@ -9,6 +9,7 @@
 namespace ExtrasBundle\Utils;
 
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class LocalExtractor
@@ -23,9 +24,15 @@ class LocalExtractor
         $this->requestStack = $requestStack;
     }
 
-    public function getLocal()
+    public function getLocal(): string
     {
         $languageCode = $this->requestStack->getCurrentRequest()->server->get('HTTP_ACCEPT_LANGUAGE', 'en');
+        return substr($languageCode, 0, 2);
+    }
+
+    public function extractLocale(Request $request): string
+    {
+        $languageCode = $request->server->get('HTTP_ACCEPT_LANGUAGE', 'en');
         return substr($languageCode, 0, 2);
     }
 }
