@@ -2,6 +2,7 @@
 
 namespace CommonDataBundle\Service\TemplateConfigurator;
 
+use CommonDataBundle\Service\TemplateConfigurator\Exception\TemplateNotFoundException;
 use CommonDataBundle\Service\TemplateConfigurator\Handler\TemplateHandlerInterface;
 use Twig\Environment;
 
@@ -63,11 +64,14 @@ class TemplateConfigurator
     }
 
     /**
-     * @param string $templatePath
      * @param string $template
      * @param int    $billingCarrierId
      *
+     * @param string $templatePath
+     *
      * @return string
+     *
+     * @throws TemplateNotFoundException
      */
     public function getTemplate(string $template, int $billingCarrierId = 0, string $templatePath = '@App/Common')
     {
@@ -84,6 +88,12 @@ class TemplateConfigurator
             return $implTemplate;
         }
 
-        return "$templatePath/{$template}.html.twig";
+        $defaultTemplate = "$templatePath/{$template}.html.twig";
+
+        if ($this->templating->getLoader()->exists($defaultTemplate)) {
+            return $defaultTemplate;
+        }
+
+        throw new TemplateNotFoundException("Template '$template' wasn't found in implemented and default templates");
     }
 }
