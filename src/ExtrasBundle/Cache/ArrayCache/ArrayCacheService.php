@@ -42,7 +42,7 @@ class ArrayCacheService implements ICacheService
      * @param int    $lifetime
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    public function saveCache(string $key, $value, int $lifetime)
+    public function saveCache(string $key, $value, int $lifetime = 120)
     {
         $item = $this->adapter->getItem($key);
         $item->set($value);
