@@ -35,16 +35,6 @@ interface CarrierInterface
     public function getOperatorId(): int;
 
     /**
-     * @return int
-     */
-    public function getSubscriptionPeriod(): int;
-
-    /**
-     * @return int
-     */
-    public function getTrialPeriod(): int;
-
-    /**
      * @return int|null
      */
     public function getNumberOfAllowedSubscriptionsByConstraint(): ?int;
