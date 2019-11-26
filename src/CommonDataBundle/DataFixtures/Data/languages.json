@@ -118,15 +118,5 @@
         "name": "Urdu",
         "code": "ur",
         "uuid": "17a32ffd-2754-422f-8284-92643eb9b19e"
-    },
-    {
-        "name": "Kazakh",
-        "code": "kk",
-        "uuid": "5179f17c-ebd4-11e8-95c4-02bb25d8f6d4"
-    },
-    {
-        "name": "Russian",
-        "code": "ru",
-        "uuid": "5179f17c-ebd4-11e8-95c4-02bb25d1jf98"
     }
 ]
